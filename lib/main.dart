@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reticle_trainer_app/rootpage.dart';
+import 'package:reticle_trainer_app/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Container(),
+      home: SplashScreen(),
     );
   }
 }
