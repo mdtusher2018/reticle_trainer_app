@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reticle_trainer_app/rootpage.dart';
 import 'package:reticle_trainer_app/splash_screen.dart';
 
 void main() {
