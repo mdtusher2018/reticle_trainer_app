@@ -35,26 +35,44 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       body: _pages[RootPage.selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: RootPage.selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Color(0xFF707070),
-        unselectedItemColor: AppColors.black,
-        showUnselectedLabels: true,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        items: [
-          BottomNavigationBarItem(
-            icon: _buildIcon("assets/home.png", RootPage.selectedIndex == 0),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon("assets/train.png", RootPage.selectedIndex == 1),
-            label: 'Train',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon("assets/share.png", RootPage.selectedIndex == 2),
-            label: 'Gallery',
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(height: 0),
+          BottomNavigationBar(
+            currentIndex: RootPage.selectedIndex,
+            onTap: _onItemTapped,
+            elevation: 0,
+            selectedItemColor: Color(0xFF707070),
+            unselectedItemColor: AppColors.black,
+            showUnselectedLabels: true,
+            backgroundColor: AppColors.white,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            items: [
+              BottomNavigationBarItem(
+                icon: _buildIcon(
+                  "assets/home.png",
+                  RootPage.selectedIndex == 0,
+                ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon(
+                  "assets/train.png",
+                  RootPage.selectedIndex == 1,
+                ),
+                label: 'Train',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon(
+                  "assets/share.png",
+                  RootPage.selectedIndex == 2,
+                ),
+                label: 'Gallery',
+              ),
+            ],
           ),
         ],
       ),

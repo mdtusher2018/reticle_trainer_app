@@ -48,9 +48,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+
         actions: [
           if (_currentPage < onboardingData.length - 1)
             TextButton(

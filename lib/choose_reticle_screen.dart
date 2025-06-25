@@ -30,9 +30,11 @@ class _ChooseReticleScreenState extends State<ChooseReticleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
         leading: const BackButton(),
         title: commonText('Choose a Reticle', size: 20, isBold: true),
-        backgroundColor: Colors.white,
+
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),

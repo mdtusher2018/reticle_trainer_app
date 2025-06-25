@@ -117,6 +117,8 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+
         title: commonText('Choose Your Target', size: 20, isBold: true),
         centerTitle: true,
         backgroundColor: Colors.white,

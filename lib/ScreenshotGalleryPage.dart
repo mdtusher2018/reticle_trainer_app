@@ -72,10 +72,14 @@ class _ScreenshotGalleryPageState extends State<ScreenshotGalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: commonText("Share Your Shot", isBold: true, size: 20),
         centerTitle: true,
+        elevation: 0,
         leading: SizedBox(),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
       ),
       body:
           screenshots.isEmpty
@@ -100,71 +104,68 @@ class _ScreenshotGalleryPageState extends State<ScreenshotGalleryPage> {
                   final file = File(item['path']!);
                   final date = item['date']!;
 
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(12),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                ),
-                                child: Image.file(
-                                  file,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                ),
-                              ),
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.lightWhite,
+                      border: Border.all(color: Colors.black, width: 2),
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(12),
                             ),
-                          ),
-                          Container(
-                            color: AppColors.black,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                vertical: 6.0,
-                                horizontal: 8,
+                                horizontal: 16.0,
                               ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: commonText(
-                                      date,
-                                      size: 14,
-                                      maxLine: 1,
-                                      color: AppColors.white,
-                                      isBold: true,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    child: Image.asset(
-                                      "assets/share.png",
-                                      width: 20,
-                                    ),
-                                    onTap: () => shareScreenshot(item['path']!),
-                                  ),
-                                  SizedBox(width: 8),
-                                  InkWell(
-                                    child: Image.asset(
-                                      "assets/delete.png",
-                                      width: 20,
-                                    ),
-                                    onTap: () => deleteScreenshot(index),
-                                  ),
-                                ],
+                              child: Image.file(
+                                file,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          color: AppColors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 6.0,
+                              horizontal: 8,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: commonText(
+                                    date,
+                                    size: 14,
+                                    maxLine: 1,
+                                    color: AppColors.white,
+                                    isBold: true,
+                                  ),
+                                ),
+                                InkWell(
+                                  child: Image.asset(
+                                    "assets/share.png",
+                                    width: 20,
+                                  ),
+                                  onTap: () => shareScreenshot(item['path']!),
+                                ),
+                                SizedBox(width: 8),
+                                InkWell(
+                                  child: Image.asset(
+                                    "assets/delete.png",
+                                    width: 20,
+                                  ),
+                                  onTap: () => deleteScreenshot(index),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },
