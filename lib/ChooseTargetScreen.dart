@@ -128,45 +128,52 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              commonText("6\" Targets", size: 18, isBold: true),
-              const SizedBox(height: 8),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: target6.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.9,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    commonText("6\" Targets", size: 18, isBold: true),
+                    const SizedBox(height: 8),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: target6.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.9,
+                      ),
+                      itemBuilder: (context, index) {
+                        return buildTargetCard(target6[index]);
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    commonText("12\" Targets", size: 18, isBold: true),
+                    const SizedBox(height: 8),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: target12.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.9,
+                      ),
+                      itemBuilder: (context, index) {
+                        return buildTargetCard(target12[index]);
+                      },
+                    ),           
+                  ],
                 ),
-                itemBuilder: (context, index) {
-                  return buildTargetCard(target6[index]);
-                },
               ),
-              const SizedBox(height: 16),
-              commonText("12\" Targets", size: 18, isBold: true),
-              const SizedBox(height: 8),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: target12.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.9,
-                ),
-                itemBuilder: (context, index) {
-                  return buildTargetCard(target12[index]);
-                },
-              ),
-              const SizedBox(height: 20),
-              commonButton(
+            ),
+         SizedBox(height: 16,),
+           commonButton(
                 "Next",
                 onTap: () {
                   if (selectedTarget == null) {
@@ -191,9 +198,8 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
                 },
                 color: Colors.black,
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
+         
+          ],
         ),
       ),
     );
