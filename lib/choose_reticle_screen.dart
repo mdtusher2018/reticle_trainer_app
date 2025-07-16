@@ -5,8 +5,9 @@ import 'package:reticle_trainer_app/commonWidgets.dart';
 
 class ChooseReticleScreen extends StatefulWidget {
   final String targetImage;
+  final bool is12Inch;
 
-  const ChooseReticleScreen({super.key, required this.targetImage});
+  const ChooseReticleScreen({super.key, required this.targetImage,required this.is12Inch});
 
   @override
   State<ChooseReticleScreen> createState() => _ChooseReticleScreenState();
@@ -116,6 +117,7 @@ class _ChooseReticleScreenState extends State<ChooseReticleScreen> {
                             reticleAsset:
                                 "assets/${reticles[selectedIndex!]}.png",
                             targetAsset: widget.targetImage,
+                            is12Inch: widget.is12Inch,
                           ),
                     ),
                   );

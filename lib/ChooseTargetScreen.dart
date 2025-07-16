@@ -191,6 +191,7 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
                         builder:
                             (_) => ChooseReticleScreen(
                               targetImage: selectedTarget!['asset']!,
+                              is12Inch: selectedTarget!['size'] == "12\"",
                             ),
                       ),
                     );

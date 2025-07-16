@@ -13,14 +13,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PracticeScreen extends StatefulWidget {
   final String targetAsset;
   final String reticleAsset;
+  final bool is12Inch;
 
-  PracticeScreen({required this.targetAsset, required this.reticleAsset});
+  PracticeScreen({required this.targetAsset, required this.reticleAsset,required this.is12Inch});
 
   @override
   _PracticeScreenState createState() => _PracticeScreenState();
 }
 
 class _PracticeScreenState extends State<PracticeScreen> {
+  
   double targetScale = 1.0;
 
   final PhotoViewController _reticleController = PhotoViewController();
@@ -34,6 +36,18 @@ class _PracticeScreenState extends State<PracticeScreen> {
     _reticleController.dispose();
     _reticleScaleController.dispose();
     super.dispose();
+  }
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.is12Inch) {
+      targetScale = 2; // Adjust scale for 12-inch targets
+    } else {
+      targetScale = 1; // Default scale for 6-inch targets
+    }
+
   }
 
   @override
@@ -61,17 +75,15 @@ class _PracticeScreenState extends State<PracticeScreen> {
                 /// Reticle with zoom/pan via PhotoView
                 PhotoView.customChild(
                   controller: _reticleController,
-
                   scaleStateController: _reticleScaleController,
                   backgroundDecoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
-                  minScale: 0.2,
-                  maxScale: 3.0,
+                  minScale: 1.0,
+                  maxScale: 1.0,
                   initialScale: 1.0,
                   enablePanAlways: true,
                   basePosition: Alignment.center,
-
                   child: Image.asset(
                     widget.reticleAsset,
                     width: 200,
@@ -82,41 +94,41 @@ class _PracticeScreenState extends State<PracticeScreen> {
             ),
           ),
 
-          Positioned(
-            right: 0,
+          // Positioned(
+          //   right: 0,
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 300, // height of vertical slider
-                  child: RotatedBox(
-                    quarterTurns:
-                        -1, // rotate slider 90 degrees counter-clockwise
-                    child: Slider(
-                      value: targetScale,
-                      min: 0.5,
-                      max: 2.5,
-                      divisions: 20,
-                      label: "${(targetScale * 100).round()}%",
-                      onChanged: (value) {
-                        setState(() {
-                          targetScale = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20),
-                commonText(
-                  "Target\nScale",
-                  isBold: true,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       SizedBox(
+          //         height: 300, // height of vertical slider
+          //         child: RotatedBox(
+          //           quarterTurns:
+          //               -1, // rotate slider 90 degrees counter-clockwise
+          //           child: Slider(
+          //             value: targetScale,
+          //             min: 0.5,
+          //             max: 2.5,
+          //             divisions: 20,
+          //             label: "${(targetScale * 100).round()}%",
+          //             onChanged: (value) {
+          //               setState(() {
+          //                 targetScale = value;
+          //               });
+          //             },
+          //           ),
+          //         ),
+          //       ),
+          //       SizedBox(width: 20),
+          //       commonText(
+          //         "Target\nScale",
+          //         isBold: true,
+          //         textAlign: TextAlign.center,
+          //       ),
+          //     ],
+          //   ),
+          // ),
 
           /// Screenshot Button
           Positioned(
