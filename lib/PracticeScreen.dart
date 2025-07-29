@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as image;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
@@ -37,16 +38,17 @@ class _PracticeScreenState extends State<PracticeScreen> {
     _reticleScaleController.dispose();
     super.dispose();
   }
-
+double reticleScale=0.2;
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (widget.is12Inch) {
-      targetScale = 2; // Adjust scale for 12-inch targets
+      targetScale = 1; // Adjust scale for 12-inch targets
     } else {
-      targetScale = 1; // Default scale for 6-inch targets
+      targetScale = 0.5; // Default scale for 6-inch targets
     }
+    // reticleScale = widget.is12Inch ? 0.4 : 0.2;
 
   }
 
@@ -69,7 +71,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
               children: [
                 Transform.scale(
                   scale: targetScale,
-                  child: Image.asset(widget.targetAsset, color: Colors.white),
+                  child: Image.asset(widget.targetAsset, color: Color(0xFFC0C0C0)),
                 ),
 
                 /// Reticle with zoom/pan via PhotoView
@@ -79,9 +81,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   backgroundDecoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
-                  minScale: 1.0,
-                  maxScale: 1.0,
-                  initialScale: 1.0,
+                  minScale: reticleScale,
+                  maxScale: reticleScale,
+                  initialScale: reticleScale,
                   enablePanAlways: true,
                   basePosition: Alignment.center,
                   child: Image.asset(
@@ -93,44 +95,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
               ],
             ),
           ),
-
-          // Positioned(
-          //   right: 0,
-
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: [
-          //       SizedBox(
-          //         height: 300, // height of vertical slider
-          //         child: RotatedBox(
-          //           quarterTurns:
-          //               -1, // rotate slider 90 degrees counter-clockwise
-          //           child: Slider(
-          //             value: targetScale,
-          //             min: 0.5,
-          //             max: 2.5,
-          //             divisions: 20,
-          //             label: "${(targetScale * 100).round()}%",
-          //             onChanged: (value) {
-          //               setState(() {
-          //                 targetScale = value;
-          //               });
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //       SizedBox(width: 20),
-          //       commonText(
-          //         "Target\nScale",
-          //         isBold: true,
-          //         textAlign: TextAlign.center,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-          /// Screenshot Button
           Positioned(
             bottom: 30,
             left: 0,
@@ -139,44 +103,88 @@ class _PracticeScreenState extends State<PracticeScreen> {
               child: IconButton(
                 icon: const Icon(Icons.camera_alt_outlined, size: 30),
                 onPressed: () async {
-                  final directory = await getApplicationDocumentsDirectory();
-                  final timestamp = DateTime.now();
-                  final formattedDate = DateFormat(
-                    "dd/MM/yyyy",
-                  ).format(timestamp);
-                  final filePath =
-                      "${directory.path}/screenshot_${timestamp.millisecondsSinceEpoch}.png";
+                  // final directory = await getApplicationDocumentsDirectory();
+                  // final timestamp = DateTime.now();
+                  // final formattedDate = DateFormat(
+                  //   "dd/MM/yyyy",
+                  // ).format(timestamp);
+                  // final filePath =
+                  //     "${directory.path}/screenshot_${timestamp.millisecondsSinceEpoch}.png";
+                  // final image = await _screenshotController.capture();
+                  // if (image != null) {
+                  //   final imageFile = File(filePath);
+                  //   await imageFile.writeAsBytes(image);
+                  //   // Store metadata
+                  //   final prefs = await SharedPreferences.getInstance();
+                  //   final existingList =
+                  //       prefs.getStringList('screenshot_metadata') ?? [];
+                  //   final newEntry = jsonEncode({
+                  //     'path': filePath,
+                  //     'date': formattedDate,
+                  //   });
+                  //   existingList.add(newEntry);
+                  //   await prefs.setStringList(
+                  //     'screenshot_metadata',
+                  //     existingList,
+                  //   );
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: commonText(
+                  //         "Screenshot saved",
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   );
+                  // }
+                   final directory = await getApplicationDocumentsDirectory();
+  final timestamp = DateTime.now();
+  final formattedDate = DateFormat("dd/MM/yyyy").format(timestamp);
+  final filePath =
+      "${directory.path}/screenshot_${timestamp.millisecondsSinceEpoch}.png";
 
-                  final image = await _screenshotController.capture();
-                  if (image != null) {
-                    final imageFile = File(filePath);
-                    await imageFile.writeAsBytes(image);
+  final rawImage = await _screenshotController.capture();
+  if (rawImage != null) {
+    // Decode image to edit
+    final originalImage = image.decodeImage(rawImage);
+    if (originalImage != null) {
+      // Define size of the cropped area (e.g. center 300x300)
+      const cropWidth = 600;
+      const cropHeight = 600;
+      final centerX = (originalImage.width / 2).round();
+      final centerY = (originalImage.height / 2).round();
 
-                    // Store metadata
-                    final prefs = await SharedPreferences.getInstance();
-                    final existingList =
-                        prefs.getStringList('screenshot_metadata') ?? [];
+      final cropped = image.copyCrop(
+        originalImage,
+        x: centerX - cropWidth ~/ 2,
+        y: centerY - cropHeight ~/ 2,
+        width: cropWidth,
+        height: cropHeight,
+      );
 
-                    final newEntry = jsonEncode({
-                      'path': filePath,
-                      'date': formattedDate,
-                    });
+      // Save cropped image
+      final croppedBytes = image.encodePng(cropped);
+      final imageFile = File(filePath);
+      await imageFile.writeAsBytes(croppedBytes);
 
-                    existingList.add(newEntry);
-                    await prefs.setStringList(
-                      'screenshot_metadata',
-                      existingList,
-                    );
+      // Store metadata
+      final prefs = await SharedPreferences.getInstance();
+      final existingList = prefs.getStringList('screenshot_metadata') ?? [];
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: commonText(
-                          "Screenshot saved",
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  }
+      final newEntry = jsonEncode({
+        'path': filePath,
+        'date': formattedDate,
+      });
+
+      existingList.add(newEntry);
+      await prefs.setStringList('screenshot_metadata', existingList);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: commonText("Screenshot saved (cropped)", color: Colors.white),
+        ),
+      );
+    }
+  }
                 },
               ),
             ),

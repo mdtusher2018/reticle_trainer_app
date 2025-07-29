@@ -11,25 +11,24 @@ class _SplashScreenState extends State<SplashScreen> {
 @override
 void initState() {
   super.initState();
-  final now = DateTime.now();
-  final expiryDate = DateTime(2025, 7, 30); // July 30, 2025
-
-  if (now.isBefore(expiryDate)) {
-    Timer(Duration(seconds: 3), () {
+  // final now = DateTime.now();
+  // final expiryDate = DateTime(2025, 7, 30); // July 30, 2025
+  // if (now.isBefore(expiryDate)) {
+  // } else {
+  //   // If expired, go to expiration screen
+  //   Timer(Duration(seconds: 3), () {
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => ExpiredPage()),
+  //     );
+  //   });
+  // }
+      Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => OnboardingPage()),
       );
     });
-  } else {
-    // If expired, go to expiration screen
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => ExpiredPage()),
-      );
-    });
-  }
 }
 
   @override
