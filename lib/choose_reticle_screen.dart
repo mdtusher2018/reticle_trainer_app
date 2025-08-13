@@ -7,7 +7,11 @@ class ChooseReticleScreen extends StatefulWidget {
   final String targetImage;
   final bool is12Inch;
 
-  const ChooseReticleScreen({super.key, required this.targetImage,required this.is12Inch});
+  const ChooseReticleScreen({
+    super.key,
+    required this.targetImage,
+    required this.is12Inch,
+  });
 
   @override
   State<ChooseReticleScreen> createState() => _ChooseReticleScreenState();
@@ -30,6 +34,7 @@ class _ChooseReticleScreenState extends State<ChooseReticleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,

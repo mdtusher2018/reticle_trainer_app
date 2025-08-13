@@ -93,7 +93,11 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(target['asset']!, height: 80),
+                    Image.asset(
+                      target['asset']!,
+                      height: 80,
+                      color: AppColors.black,
+                    ),
                     const SizedBox(height: 8),
                     commonText("${target['label']}", size: 16, isBold: true),
                   ],
@@ -141,12 +145,13 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: target6.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.9,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.9,
+                          ),
                       itemBuilder: (context, index) {
                         return buildTargetCard(target6[index]);
                       },
@@ -158,48 +163,48 @@ class _ChooseTargetScreenState extends State<ChooseTargetScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: target12.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.9,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.9,
+                          ),
                       itemBuilder: (context, index) {
                         return buildTargetCard(target12[index]);
                       },
-                    ),           
+                    ),
                   ],
                 ),
               ),
             ),
-         SizedBox(height: 16,),
-           commonButton(
-                "Next",
-                onTap: () {
-                  if (selectedTarget == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Please select a target first"),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.redAccent,
-                      ),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (_) => ChooseReticleScreen(
-                              targetImage: selectedTarget!['asset']!,
-                              is12Inch: selectedTarget!['size'] == "12\"",
-                            ),
-                      ),
-                    );
-                  }
-                },
-                color: Colors.black,
-              ),
-         
+            SizedBox(height: 16),
+            commonButton(
+              "Next",
+              onTap: () {
+                if (selectedTarget == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please select a target first"),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.redAccent,
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (_) => ChooseReticleScreen(
+                            targetImage: selectedTarget!['asset']!,
+                            is12Inch: selectedTarget!['size'] == "12\"",
+                          ),
+                    ),
+                  );
+                }
+              },
+              color: Colors.black,
+            ),
           ],
         ),
       ),
