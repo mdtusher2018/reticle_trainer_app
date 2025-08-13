@@ -26,7 +26,7 @@ class _ChooseReticleScreenState extends State<ChooseReticleScreen> {
     "MPCT-1X",
     "MPCT-2X",
     "SKMR4+",
-    "SKMR4+",
+    "SKMR4+ (2)",
   ];
 
   int? selectedIndex;
