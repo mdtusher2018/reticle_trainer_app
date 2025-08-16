@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -52,6 +53,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,11 +95,17 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         false, // So full image is used, even outside viewport
                     child: Image.asset(
                       widget.reticleAsset,
+
                       fit: BoxFit.none,
+                      width:1500,
+                      height:1500,
                       scale: 2,
                     ),
                   ),
                 ),
+
+
+
               ],
             ),
           ),
